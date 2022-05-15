@@ -24,6 +24,7 @@ public class game extends JFrame {
    int hgt= 0;
    int rotation = 0;
    
+   boolean isPause = false;
    boolean limit = false;
    
    int curX[]= new int[4], curY[] = new int [4]; // 블록들의 좌표 저장
@@ -323,7 +324,7 @@ public class game extends JFrame {
       
       btn1.addActionListener(new ActionListener(){
           public void actionPerformed(ActionEvent e){
-        	  speed_Value = 0; //정지
+        	  isPause = true; //정지
           }
        });
       
@@ -343,7 +344,8 @@ public class game extends JFrame {
       
       btn4.addActionListener(new ActionListener(){
           public void actionPerformed(ActionEvent e){
-        	  speed_Value = 1; //재개
+        	  
+        	  isPause = false; //재개
           }
        });
       
@@ -691,7 +693,20 @@ public class game extends JFrame {
       public void run(){
          while(true){
             try{
-               sleep(500/speed_Value);
+            	sleep(500/speed_Value);
+            	while(true) //pause 기능
+        		{
+            		btn4.addActionListener(new ActionListener(){
+            	          public void actionPerformed(ActionEvent e){
+            	        	  
+            	        	  isPause = false; //재개
+            	          }
+            	       });
+            		if(isPause!=true)
+                	{
+            			break;
+                	}
+        		}
                if(limit == false) // limit이 false일 경우에만 작동. true가 되면 테트리스 작동중지
                   TP.down();
             }catch(InterruptedException e){
