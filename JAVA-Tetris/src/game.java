@@ -18,6 +18,8 @@ public class game extends JFrame {
    
    int score = 0;
    
+   int speed_Value = 1; //속도 조정 변수
+   
    int wid=100;
    int hgt= 0;
    int rotation = 0;
@@ -251,11 +253,17 @@ public class game extends JFrame {
                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
 
+   //버튼 생성, 라벨 생성
    JButton btn = new JButton("재도전");
+   JButton btn1 = new JButton("정 지");
+   JButton btn2 = new JButton("속도 업");
+   JButton btn3 = new JButton("속도 다운");
+   JButton btn4 = new JButton("재 개");
    JLabel lb = new JLabel(); //테트리스 타이틀
    JLabel lbl = new JLabel(); //점수
    JLabel lbl2 = new JLabel(); //점수 숫자
    JLabel lbl3 = new JLabel(); //속도
+   JLabel lbl4 = new JLabel(); //속도숫자
       
    game(){
       setTitle("테트리스");
@@ -283,6 +291,8 @@ public class game extends JFrame {
       lbl3.setText("속  도");
       lbl3.setFont(new Font("나눔고딕",Font.PLAIN,15));
       
+      lbl4.setFont(new Font("arial",Font.PLAIN,15));
+      
       
       TP.addKeyListener(new KeyAdapter(){
             public void keyPressed(KeyEvent e){
@@ -299,6 +309,7 @@ public class game extends JFrame {
             }
          });
       
+      //버튼 리스너
       btn.addActionListener(new ActionListener(){
          public void actionPerformed(ActionEvent e){
             limit = false;
@@ -309,6 +320,32 @@ public class game extends JFrame {
             wid =100; hgt = 0;
          }
       });
+      
+      btn1.addActionListener(new ActionListener(){
+          public void actionPerformed(ActionEvent e){
+        	  speed_Value = 0; //정지
+          }
+       });
+      
+      btn2.addActionListener(new ActionListener(){
+          public void actionPerformed(ActionEvent e){
+        	  if(speed_Value<3) //총 속도 3까지 가능
+        		  speed_Value++;
+          }
+       });
+      
+      btn3.addActionListener(new ActionListener(){
+          public void actionPerformed(ActionEvent e){
+        	  if(speed_Value>1) //속도가 0이 되면 안되게 최소 1로 설정
+        		  speed_Value--;
+          }
+       });
+      
+      btn4.addActionListener(new ActionListener(){
+          public void actionPerformed(ActionEvent e){
+        	  speed_Value = 1; //재개
+          }
+       });
       
       TP.setBackground(Color.WHITE);
       setSize(1280,800); //이게 화면 해상도
@@ -348,6 +385,22 @@ public class game extends JFrame {
          lbl.setLocation(960,345);  //숫자 점수 위치
          TP.add(lbl);
          lbl.setText(Integer.toString(score*100));
+         
+         lbl4.setLocation(970,170);  //속도 숫자 위치
+         TP.add(lbl4);
+         lbl4.setText(Integer.toString(speed_Value));
+         
+         btn1.setLocation(40,50);  //버튼 정지 위치
+         TP.add(btn1);
+         
+         btn2.setLocation(893,140);  //버튼 속도 업 위치
+         TP.add(btn2);
+         
+         btn3.setLocation(983,140);  //버튼 속도 다운 위치
+         TP.add(btn3);
+         
+         btn4.setLocation(140,50);  //버튼 재개 위치
+         TP.add(btn4);
          
          g.setColor(Color.ORANGE); // 새로 떨어지는 블럭,미리보기  블럭 색깔
          
@@ -638,7 +691,7 @@ public class game extends JFrame {
       public void run(){
          while(true){
             try{
-               sleep(500);
+               sleep(500/speed_Value);
                if(limit == false) // limit이 false일 경우에만 작동. true가 되면 테트리스 작동중지
                   TP.down();
             }catch(InterruptedException e){
