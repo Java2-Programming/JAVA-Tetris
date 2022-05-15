@@ -8,7 +8,7 @@ import java.util.*;
 public class game extends JFrame {
    Container c = getContentPane();
    TetrisPanel TP = new TetrisPanel();
-   JDialog JD = new JDialog();
+   JDialog JD = new JDialog(); //점수
    TetrisThread th;
    
    static int blocksize = 20;
@@ -16,7 +16,7 @@ public class game extends JFrame {
    int End = 0;
    int random = 0 , random2 = (int)(Math.random()*7);
    
-   int score =0;
+   int score = 0;
    
    int wid=100;
    int hgt= 0;
@@ -226,6 +226,9 @@ public class game extends JFrame {
          }
    };
    
+   public final int XVALUE = 12; //총 가로
+   public final int YVALUE = 19; //총 세로
+   public final int STARTX = 1; //0의 시작 포인트
    int[][] gameboard = {{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
                      {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
                      {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -249,8 +252,10 @@ public class game extends JFrame {
                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
 
    JButton btn = new JButton("재도전");
-   JLabel lbl = new JLabel();
-   JLabel lbl2 = new JLabel();
+   JLabel lb = new JLabel(); //테트리스 타이틀
+   JLabel lbl = new JLabel(); //점수
+   JLabel lbl2 = new JLabel(); //점수 숫자
+   JLabel lbl3 = new JLabel(); //속도
       
    game(){
       setTitle("테트리스");
@@ -268,10 +273,15 @@ public class game extends JFrame {
       JD.setLayout(new FlowLayout(FlowLayout.CENTER, 150, 30));
       
       
+      lb.setText("테 트 리 스");
+      lb.setFont(new Font("나눔고딕",Font.PLAIN,20));
       
       lbl.setFont(new Font("arial",Font.PLAIN,15));
       lbl2.setText("점  수");
       lbl2.setFont(new Font("나눔고딕",Font.PLAIN,15));
+      
+      lbl3.setText("속  도");
+      lbl3.setFont(new Font("나눔고딕",Font.PLAIN,15));
       
       
       TP.addKeyListener(new KeyAdapter(){
@@ -292,8 +302,8 @@ public class game extends JFrame {
       btn.addActionListener(new ActionListener(){
          public void actionPerformed(ActionEvent e){
             limit = false;
-            for(int y=0; y<19;y++)
-               for(int x=1; x<12; x++)
+            for(int y=0; y<YVALUE;y++)
+               for(int x=STARTX; x<XVALUE; x++)
                   gameboard[y][x] =0 ;
             score =0;
             wid =100; hgt = 0;
@@ -326,10 +336,16 @@ public class game extends JFrame {
          super.paintComponent(g);
          
          
-         lbl2.setLocation(353,120);
+         lb.setLocation(550,100); //테트리스 타이틀
+         TP.add(lb);
+         
+         lbl2.setLocation(953,320); //점수 위치
          TP.add(lbl2);
          
-         lbl.setLocation(360,145);
+         lbl3.setLocation(953,120); //속도 위치
+         TP.add(lbl3);
+         
+         lbl.setLocation(960,345);  //숫자 점수 위치
          TP.add(lbl);
          lbl.setText(Integer.toString(score*100));
          
@@ -360,18 +376,20 @@ public class game extends JFrame {
          }
       }
       
+   // 다음 나올 도형 출력
       public void blockLookAhead(Graphics g){
          for(int a = 0; a<4 ;a++){
               for(int b = 0; b<4;b++){
                  if(blocks[random2][0][a][b] == 1){
-                    g.fill3DRect(b*blocksize+120, a*blocksize, blocksize, blocksize, true);
+                    g.fill3DRect(b*blocksize+250, a*blocksize, blocksize, blocksize, true);
                  }
               }
           }
       }
       
+      //게임오버시 나타나는것
       public void gameOverCheck(){
-         for(int x=1;x<12;x++)
+         for(int x=STARTX;x<XVALUE;x++)
              if(gameboard[2][x]==1){
                 limit = true;
                 
@@ -386,8 +404,8 @@ public class game extends JFrame {
       }
       
       public void removeBlock(int cnt, int cnt2, Graphics g){
-         for(int y =0;y<19;y++){
-             for(int x =1; x<12 ; x++){
+         for(int y =0;y<YVALUE;y++){
+             for(int x =STARTX; x<XVALUE ; x++){
                 if(gameboard[y][x] == 1){
                    cnt2++;
                 }
@@ -408,10 +426,10 @@ public class game extends JFrame {
       
       public void makeBlock(Graphics g){
          g.setColor(Color.GRAY); 
-          for(int y=0; y<19;y++){
-             for(int x=1; x<12; x++){
+          for(int y=0; y<YVALUE;y++){
+             for(int x=STARTX; x<XVALUE; x++){
                 if(gameboard[y][x]== 1){
-                   g.fill3DRect( x*blocksize+20, y*blocksize+60, blocksize, blocksize, true);
+                   g.fill3DRect( x*blocksize+470, y*blocksize+160, blocksize, blocksize, true);  //블록위치
                 }
              }
           }
@@ -422,7 +440,7 @@ public class game extends JFrame {
               for(int k = 0; k<4;k++){
                  if(blocks[random][rotation][j][k] == 1){
                     curX[cnt] = ((k*blocksize)+wid)/blocksize; curY[cnt] = ((j*blocksize)+hgt)/blocksize;//curX,Y[0][1][2][3]에 좌표 4개 저장
-                    g.fill3DRect(curX[cnt]*blocksize+20, curY[cnt]*blocksize+60, blocksize, blocksize, true);
+                    g.fill3DRect(curX[cnt]*blocksize+470, curY[cnt]*blocksize+160, blocksize, blocksize, true);   //블록위치
                     
                     cnt ++;
                  }
@@ -575,13 +593,13 @@ public class game extends JFrame {
           
       }
       
-      public void makeBorder(Graphics g){
+      public void makeBorder(Graphics g){  //기둥들 위치
          g.setColor(Color.GRAY);
          
-         g.draw3DRect(28, 70, 5, 375,true); // 기둥
-         g.draw3DRect(265, 70, 5, 375, true); // 기둥
-         g.draw3DRect(15, 445, 270, 5,true); // 바닥
-         g.draw3DRect(15, 65, 270, 5, true); // 천장
+         g.draw3DRect(478, 170, 5, 375,true); // 기둥
+         g.draw3DRect(715, 170, 5, 375, true); // 기둥
+         g.draw3DRect(465, 545, 270, 5,true); // 바닥
+         g.draw3DRect(465, 165, 270, 5, true); // 천장
       }
       
       void down(){
