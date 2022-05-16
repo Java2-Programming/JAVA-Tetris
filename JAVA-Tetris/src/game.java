@@ -8,7 +8,7 @@ import java.util.*;
 public class game extends JFrame {
    Container c = getContentPane();
    TetrisPanel TP = new TetrisPanel();
-   JDialog JD = new JDialog(); //Á¡¼ö
+   JDialog JD = new JDialog(); //ì ìˆ˜
    TetrisThread th;
    
    static int blocksize = 20;
@@ -18,7 +18,7 @@ public class game extends JFrame {
    
    int score = 0;
    
-   int speed_Value = 1; //¼Óµµ Á¶Á¤ º¯¼ö
+   int speed_Value = 1; //ì†ë„ ì¡°ì • ë³€ìˆ˜
    
    int wid=100;
    int hgt= 0;
@@ -27,13 +27,13 @@ public class game extends JFrame {
    boolean isPause = false;
    boolean limit = false;
    
-   int curX[]= new int[4], curY[] = new int [4]; // ºí·ÏµéÀÇ ÁÂÇ¥ ÀúÀå
+   int curX[]= new int[4], curY[] = new int [4]; // ë¸”ë¡ë“¤ì˜ ì¢Œí‘œ ì €ì¥
    
    int blocks[][][][]  = 
       {
          {
-            //¡á
-            //¡á¡á¡á
+            //â– 
+            //â– â– â– 
             {
                {0,0,0,0},
                {1,0,0,0},
@@ -61,8 +61,8 @@ public class game extends JFrame {
          },
          {
 
-               //  ¡á
-               //¡á¡á¡á
+               //  â– 
+               //â– â– â– 
             {
                {0,0,0,0},
                {0,0,1,0},
@@ -89,8 +89,8 @@ public class game extends JFrame {
             }
          },
          {
-               //  ¡á¡á
-               //  ¡á¡á
+               //  â– â– 
+               //  â– â– 
             {
                {0,0,0,0},
                {1,1,0,0},
@@ -117,7 +117,7 @@ public class game extends JFrame {
             }
          },
          {
-               // ¡á¡á¡á¡á
+               // â– â– â– â– 
             {
                {0,0,0,0},
                {0,0,0,0},
@@ -144,8 +144,8 @@ public class game extends JFrame {
             }
          },
          {
-                //¡á
-               //¡á¡á¡á
+                //â– 
+               //â– â– â– 
             {
                {0,0,0,0},
                {0,1,0,0},
@@ -172,8 +172,8 @@ public class game extends JFrame {
             }   
          },
          {
-                //  ¡á¡á
-                //   ¡á¡á
+                //  â– â– 
+                //   â– â– 
             {
                {0,0,0,0},
                {1,1,0,0},
@@ -200,8 +200,8 @@ public class game extends JFrame {
             }
          },
          {
-                //  ¡á¡á
-               //  ¡á¡á
+                //  â– â– 
+               //  â– â– 
             {
                {0,0,0,0},
                {0,1,1,0},
@@ -229,9 +229,9 @@ public class game extends JFrame {
          }
    };
    
-   public final int XVALUE = 12; //ÃÑ °¡·Î
-   public final int YVALUE = 19; //ÃÑ ¼¼·Î
-   public final int STARTX = 1; //0ÀÇ ½ÃÀÛ Æ÷ÀÎÆ®
+   public final int XVALUE = 12; //ì´ ê°€ë¡œ
+   public final int YVALUE = 19; //ì´ ì„¸ë¡œ
+   public final int STARTX = 1; //0ì˜ ì‹œì‘ í¬ì¸íŠ¸
    int[][] gameboard = {{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
                      {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
                      {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -254,43 +254,55 @@ public class game extends JFrame {
                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
 
-   //¹öÆ° »ı¼º, ¶óº§ »ı¼º
-   JButton btn = new JButton("ÀçµµÀü");
-   JButton btn1 = new JButton("Á¤ Áö");
-   JButton btn2 = new JButton("¼Óµµ ¾÷");
-   JButton btn3 = new JButton("¼Óµµ ´Ù¿î");
-   JButton btn4 = new JButton("Àç °³");
-   JLabel lb = new JLabel(); //Å×Æ®¸®½º Å¸ÀÌÆ²
-   JLabel lbl = new JLabel(); //Á¡¼ö
-   JLabel lbl2 = new JLabel(); //Á¡¼ö ¼ıÀÚ
-   JLabel lbl3 = new JLabel(); //¼Óµµ
-   JLabel lbl4 = new JLabel(); //¼Óµµ¼ıÀÚ
-      
+   //ë²„íŠ¼ ìƒì„±, ë¼ë²¨ ìƒì„±
+   JButton btn = new JButton("ì¬ë„ì „");
+   JButton btn1 = new JButton("ì • ì§€");
+   JButton btn2 = new JButton("ì†ë„ ì—…");
+   JButton btn3 = new JButton("ì†ë„ ë‹¤ìš´");
+   JButton btn4 = new JButton("ì¬ ê°œ");
+   JLabel lb = new JLabel(); //í…ŒíŠ¸ë¦¬ìŠ¤ íƒ€ì´í‹€
+   JLabel lbl = new JLabel(); //ì ìˆ˜
+   JLabel lbl2 = new JLabel(); //ì ìˆ˜ ìˆ«ì
+   JLabel lbl3 = new JLabel(); //ì†ë„
+   JLabel lbl4 = new JLabel(); //ì†ë„ìˆ«ì
+   
+   //ì„±ìš±
+   ImageIcon i1 = new ImageIcon("images/Restart.png");
+   JButton btnn = new JButton(i1);
+   JLabel sc = new JLabel("Score");
+   ImageIcon low = new ImageIcon("images/low.png");
+   ImageIcon middle = new ImageIcon("images/middle.png");
+   ImageIcon high = new ImageIcon("images/high.png");
+   JLabel low1 = new JLabel(low);
+   JLabel middle1 = new JLabel(middle);
+   JLabel high1 = new JLabel(high);
+   //ì„±ìš±
+   
    game(){
-      setTitle("Å×Æ®¸®½º");
+      setTitle("í…ŒíŠ¸ë¦¬ìŠ¤");
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setLayout(null);
-      TP.setSize(1280,800); //ÀÌ°Ô °ÔÀÓÈ­¸é ÇØ»óµµ
+      TP.setSize(1280,800); //ì´ê²Œ ê²Œì„í™”ë©´ í•´ìƒë„
       
       add(TP);
       
       th = new TetrisThread();
       
       // JDialog 
-      JD.setTitle("Á¡¼ö");
+      JD.setTitle("ì ìˆ˜");
       JD.setSize(250,190);
       JD.setLayout(new FlowLayout(FlowLayout.CENTER, 150, 30));
       
       
-      lb.setText("Å× Æ® ¸® ½º");
-      lb.setFont(new Font("³ª´®°íµñ",Font.PLAIN,20));
+      lb.setText("í…Œ íŠ¸ ë¦¬ ìŠ¤");
+      lb.setFont(new Font("ë‚˜ëˆ”ê³ ë”•",Font.PLAIN,20));
       
       lbl.setFont(new Font("arial",Font.PLAIN,15));
-      lbl2.setText("Á¡  ¼ö");
-      lbl2.setFont(new Font("³ª´®°íµñ",Font.PLAIN,15));
+      lbl2.setText("ì   ìˆ˜");
+      lbl2.setFont(new Font("ë‚˜ëˆ”ê³ ë”•",Font.PLAIN,15));
       
-      lbl3.setText("¼Ó  µµ");
-      lbl3.setFont(new Font("³ª´®°íµñ",Font.PLAIN,15));
+      lbl3.setText("ì†  ë„");
+      lbl3.setFont(new Font("ë‚˜ëˆ”ê³ ë”•",Font.PLAIN,15));
       
       lbl4.setFont(new Font("arial",Font.PLAIN,15));
       
@@ -310,9 +322,15 @@ public class game extends JFrame {
             }
          });
       
-      //¹öÆ° ¸®½º³Ê
-      btn.addActionListener(new ActionListener(){
+      //ë²„íŠ¼ ë¦¬ìŠ¤ë„ˆ
+      btnn.addActionListener(new ActionListener(){
          public void actionPerformed(ActionEvent e){
+        	 //ì„±ìš±
+        	JD.remove(high1);
+            JD.remove(middle1);
+            JD.remove(low1); 
+            //ì„±ìš±
+        	 
             limit = false;
             for(int y=0; y<YVALUE;y++)
                for(int x=STARTX; x<XVALUE; x++)
@@ -324,20 +342,20 @@ public class game extends JFrame {
       
       btn1.addActionListener(new ActionListener(){
           public void actionPerformed(ActionEvent e){
-        	  isPause = true; //Á¤Áö
+        	  isPause = true; //ì •ì§€
           }
        });
       
       btn2.addActionListener(new ActionListener(){
           public void actionPerformed(ActionEvent e){
-        	  if(speed_Value<3) //ÃÑ ¼Óµµ 3±îÁö °¡´É
+        	  if(speed_Value<3) //ì´ ì†ë„ 3ê¹Œì§€ ê°€ëŠ¥
         		  speed_Value++;
           }
        });
       
       btn3.addActionListener(new ActionListener(){
           public void actionPerformed(ActionEvent e){
-        	  if(speed_Value>1) //¼Óµµ°¡ 0ÀÌ µÇ¸é ¾ÈµÇ°Ô ÃÖ¼Ò 1·Î ¼³Á¤
+        	  if(speed_Value>1) //ì†ë„ê°€ 0ì´ ë˜ë©´ ì•ˆë˜ê²Œ ìµœì†Œ 1ë¡œ ì„¤ì •
         		  speed_Value--;
           }
        });
@@ -345,16 +363,16 @@ public class game extends JFrame {
       btn4.addActionListener(new ActionListener(){
           public void actionPerformed(ActionEvent e){
         	  
-        	  isPause = false; //Àç°³
+        	  isPause = false; //ì¬ê°œ
           }
        });
       
       TP.setBackground(Color.WHITE);
-      setSize(1280,800); //ÀÌ°Ô È­¸é ÇØ»óµµ
+      setSize(1280,800); //ì´ê²Œ í™”ë©´ í•´ìƒë„
       setVisible(true);
 
 
-      // È­¸é Áß¾Ó Á¤·Ä
+      // í™”ë©´ ì¤‘ì•™ ì •ë ¬
       Dimension frameSize = this.getSize();
       Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
       setLocation((screenSize.width - frameSize.width)/2, (screenSize.height - frameSize.height)/2);
@@ -375,53 +393,53 @@ public class game extends JFrame {
          super.paintComponent(g);
          
          
-         lb.setLocation(550,100); //Å×Æ®¸®½º Å¸ÀÌÆ²
+         lb.setLocation(550,100); //í…ŒíŠ¸ë¦¬ìŠ¤ íƒ€ì´í‹€
          TP.add(lb);
          
-         lbl2.setLocation(953,320); //Á¡¼ö À§Ä¡
+         lbl2.setLocation(953,320); //ì ìˆ˜ ìœ„ì¹˜
          TP.add(lbl2);
          
-         lbl3.setLocation(953,120); //¼Óµµ À§Ä¡
+         lbl3.setLocation(953,120); //ì†ë„ ìœ„ì¹˜
          TP.add(lbl3);
          
-         lbl.setLocation(960,345);  //¼ıÀÚ Á¡¼ö À§Ä¡
+         lbl.setLocation(960,345);  //ìˆ«ì ì ìˆ˜ ìœ„ì¹˜
          TP.add(lbl);
          lbl.setText(Integer.toString(score*100));
          
-         lbl4.setLocation(970,170);  //¼Óµµ ¼ıÀÚ À§Ä¡
+         lbl4.setLocation(970,170);  //ì†ë„ ìˆ«ì ìœ„ì¹˜
          TP.add(lbl4);
          lbl4.setText(Integer.toString(speed_Value));
          
-         btn1.setLocation(40,50);  //¹öÆ° Á¤Áö À§Ä¡
+         btn1.setLocation(40,50);  //ë²„íŠ¼ ì •ì§€ ìœ„ì¹˜
          TP.add(btn1);
          
-         btn2.setLocation(893,140);  //¹öÆ° ¼Óµµ ¾÷ À§Ä¡
+         btn2.setLocation(893,140);  //ë²„íŠ¼ ì†ë„ ì—… ìœ„ì¹˜
          TP.add(btn2);
          
-         btn3.setLocation(983,140);  //¹öÆ° ¼Óµµ ´Ù¿î À§Ä¡
+         btn3.setLocation(983,140);  //ë²„íŠ¼ ì†ë„ ë‹¤ìš´ ìœ„ì¹˜
          TP.add(btn3);
          
-         btn4.setLocation(140,50);  //¹öÆ° Àç°³ À§Ä¡
+         btn4.setLocation(140,50);  //ë²„íŠ¼ ì¬ê°œ ìœ„ì¹˜
          TP.add(btn4);
          
-         g.setColor(Color.ORANGE); // »õ·Î ¶³¾îÁö´Â ºí·°,¹Ì¸®º¸±â  ºí·° »ö±ò
+         g.setColor(Color.ORANGE); // ìƒˆë¡œ ë–¨ì–´ì§€ëŠ” ë¸”ëŸ­,ë¯¸ë¦¬ë³´ê¸°  ë¸”ëŸ­ ìƒ‰ê¹”
          
-         // ´ÙÀ½ ³ª¿Ã µµÇü Ãâ·Â
+         // ë‹¤ìŒ ë‚˜ì˜¬ ë„í˜• ì¶œë ¥
          blockLookAhead(g);
          
-         // º®ÀÌ ÃµÀå¿¡ ´êÀ¸¸é °ÔÀÓ ¿À¹ö
+         // ë²½ì´ ì²œì¥ì— ë‹¿ìœ¼ë©´ ê²Œì„ ì˜¤ë²„
          gameOverCheck();
                 
-         // ÇÑ ÇàÀÌ ¸ğµÎ ºí·ÏÀ¸·Î Ã¤¿öÁø °æ¿ì ºí·Ïµé Á¦°Å(Ã¤¿öÁöÁö¾ÊÀº °æ¿ì ºí·Ï ¶³¾îÁöµµ·Ï)
+         // í•œ í–‰ì´ ëª¨ë‘ ë¸”ë¡ìœ¼ë¡œ ì±„ì›Œì§„ ê²½ìš° ë¸”ë¡ë“¤ ì œê±°(ì±„ì›Œì§€ì§€ì•Šì€ ê²½ìš° ë¸”ë¡ ë–¨ì–´ì§€ë„ë¡)
          removeBlock(cnt, cnt2, g);
          
-         // ºí·ÏÀÌ º®¿¡ ÂøÁöÇÏ¸é ºí·Ï->º®À¸·Î º¯È¯(¶³¾îÁö´Â ºí·Ï ÃÊ±âÈ­)
+         // ë¸”ë¡ì´ ë²½ì— ì°©ì§€í•˜ë©´ ë¸”ë¡->ë²½ìœ¼ë¡œ ë³€í™˜(ë–¨ì–´ì§€ëŠ” ë¸”ë¡ ì´ˆê¸°í™”)
          blockToWall();
          
-         // º®µéÀ» »ı¼º
+         // ë²½ë“¤ì„ ìƒì„±
          makeBlock(g);
          
-         // Å×µÎ¸® »ı¼º
+         // í…Œë‘ë¦¬ ìƒì„±
          makeBorder(g);
        
        
@@ -431,7 +449,7 @@ public class game extends JFrame {
          }
       }
       
-   // ´ÙÀ½ ³ª¿Ã µµÇü Ãâ·Â
+   // ë‹¤ìŒ ë‚˜ì˜¬ ë„í˜• ì¶œë ¥
       public void blockLookAhead(Graphics g){
          for(int a = 0; a<4 ;a++){
               for(int b = 0; b<4;b++){
@@ -442,19 +460,29 @@ public class game extends JFrame {
           }
       }
       
-      //°ÔÀÓ¿À¹ö½Ã ³ªÅ¸³ª´Â°Í
+      //ê²Œì„ì˜¤ë²„ì‹œ ë‚˜íƒ€ë‚˜ëŠ”ê²ƒ
       public void gameOverCheck(){
          for(int x=STARTX;x<XVALUE;x++)
              if(gameboard[2][x]==1){
                 limit = true;
-                
+                //ì„±ìš±
+                JD.setSize(300, 400);
                
+                JD.add(sc);
                 //lbl.setLocation(50,50);
                 JD.add(lbl);
-                JD.add(btn);
+                JD.add(btnn);
                
                 //btn.setLocation(50,30);
                 JD.setVisible(true);
+                
+                //ì„±ìš±
+                if(score == 0)
+                	JD.add(low1);
+                else if(score >0 && score < 10)
+                	JD.add(middle1);
+                else
+                	JD.add(high1);
              }
       }
       
@@ -473,7 +501,7 @@ public class game extends JFrame {
                    }
                score++;
              }else{
-                blockDown(cnt,g); // ÇÑ ÇàÀÌ ¸ğµÎ ºí·ÏÀ¸·Î Ã¤¿öÁöÁö ¾ÊÀ» ¶§¸¸ ºí·ÏÀÌ ³»·Á°¡µµ·Ï ÇÔ
+                blockDown(cnt,g); // í•œ í–‰ì´ ëª¨ë‘ ë¸”ë¡ìœ¼ë¡œ ì±„ì›Œì§€ì§€ ì•Šì„ ë•Œë§Œ ë¸”ë¡ì´ ë‚´ë ¤ê°€ë„ë¡ í•¨
              }
              cnt2 = 0 ;
           }
@@ -484,7 +512,7 @@ public class game extends JFrame {
           for(int y=0; y<YVALUE;y++){
              for(int x=STARTX; x<XVALUE; x++){
                 if(gameboard[y][x]== 1){
-                   g.fill3DRect( x*blocksize+470, y*blocksize+160, blocksize, blocksize, true);  //ºí·ÏÀ§Ä¡
+                   g.fill3DRect( x*blocksize+470, y*blocksize+160, blocksize, blocksize, true);  //ë¸”ë¡ìœ„ì¹˜
                 }
              }
           }
@@ -494,8 +522,8 @@ public class game extends JFrame {
          for(int j = 0; j<4 ;j++){
               for(int k = 0; k<4;k++){
                  if(blocks[random][rotation][j][k] == 1){
-                    curX[cnt] = ((k*blocksize)+wid)/blocksize; curY[cnt] = ((j*blocksize)+hgt)/blocksize;//curX,Y[0][1][2][3]¿¡ ÁÂÇ¥ 4°³ ÀúÀå
-                    g.fill3DRect(curX[cnt]*blocksize+470, curY[cnt]*blocksize+160, blocksize, blocksize, true);   //ºí·ÏÀ§Ä¡
+                    curX[cnt] = ((k*blocksize)+wid)/blocksize; curY[cnt] = ((j*blocksize)+hgt)/blocksize;//curX,Y[0][1][2][3]ì— ì¢Œí‘œ 4ê°œ ì €ì¥
+                    g.fill3DRect(curX[cnt]*blocksize+470, curY[cnt]*blocksize+160, blocksize, blocksize, true);   //ë¸”ë¡ìœ„ì¹˜
                     
                     cnt ++;
                  }
@@ -503,8 +531,8 @@ public class game extends JFrame {
            }
       }
       
-      // ¶³¾îÁö´ø ºí·ÏÀÌ º®ÀÌ µÇ´ÂÁö °Ë»ç
-      // º®ÀÌ µÇ¸é wid=120, hgt=0 À¸·Î ºí·Ï ÃÊ±âÈ­, rotationµµ ÃÊ±âÈ­ 
+      // ë–¨ì–´ì§€ë˜ ë¸”ë¡ì´ ë²½ì´ ë˜ëŠ”ì§€ ê²€ì‚¬
+      // ë²½ì´ ë˜ë©´ wid=120, hgt=0 ìœ¼ë¡œ ë¸”ë¡ ì´ˆê¸°í™”, rotationë„ ì´ˆê¸°í™” 
       public void blockToWall(){
          try{
          for(int z = 0; z<4 ; z++)
@@ -526,28 +554,28 @@ public class game extends JFrame {
          
       }
       
-      // ¿ŞÂÊ º®¿¡ Ãæµ¹ÇÏ¸é ¸ø¿òÁ÷ÀÌµµ·Ï
+      // ì™¼ìª½ ë²½ì— ì¶©ëŒí•˜ë©´ ëª»ì›€ì§ì´ë„ë¡
       public int collision_LEFT(){
          for(int i=0; i<4; i++){
-            if(gameboard[curY[i]][curX[i]-1] == 1)  // Ãæµ¹½Ã 1 ¹İÈ¯
+            if(gameboard[curY[i]][curX[i]-1] == 1)  // ì¶©ëŒì‹œ 1 ë°˜í™˜
                return 1;
          }
-         return 0; // Ãæµ¹ÇÏÁö ¾ÊÀ¸¸é 0 ¹İÈ¯
+         return 0; // ì¶©ëŒí•˜ì§€ ì•Šìœ¼ë©´ 0 ë°˜í™˜
       }
       
-      // ¿À¸¥ÂÊ º®¿¡ Ãæµ¹ÇÏ¸é ¸ø ¿òÁ÷ÀÌµµ·Ï
+      // ì˜¤ë¥¸ìª½ ë²½ì— ì¶©ëŒí•˜ë©´ ëª» ì›€ì§ì´ë„ë¡
       public int collision_RIGHT(){
 
          for(int i=0; i<4; i++){
-            if(gameboard[curY[i]][curX[i]+1] == 1)   // Ãæµ¹½Ã 1¹İÈ¯
+            if(gameboard[curY[i]][curX[i]+1] == 1)   // ì¶©ëŒì‹œ 1ë°˜í™˜
                return 1;
          }
-         return 0; // Ãæµ¹ÇÏÁö ¾ÊÀ¸¸é 0¹İÈ¯
+         return 0; // ì¶©ëŒí•˜ì§€ ì•Šìœ¼ë©´ 0ë°˜í™˜
       }
       
-      // curX,Y¿¡ ´ÙÀ½ È¸Àü µµÇüÀÇ Àı´ëÁÂÇ¥¸¦ ¸ğµÎ ±â·ÏÇØµÎ°í, ¸¸¾à ¿À¸¥ÂÊÀÌ³ª ¿ŞÂÊ XÁÂÇ¥1,2Ä­ ¾È¿¡ º®ÀÌ ÀÖÀ¸¸é ±×¸¸Å­ ¿À¸¥ÂÊ È¤Àº ¿ŞÂÊÀ¸·Î ¹Ğ¾î¼­ ¹èÄ¡
+      // curX,Yì— ë‹¤ìŒ íšŒì „ ë„í˜•ì˜ ì ˆëŒ€ì¢Œí‘œë¥¼ ëª¨ë‘ ê¸°ë¡í•´ë‘ê³ , ë§Œì•½ ì˜¤ë¥¸ìª½ì´ë‚˜ ì™¼ìª½ Xì¢Œí‘œ1,2ì¹¸ ì•ˆì— ë²½ì´ ìˆìœ¼ë©´ ê·¸ë§Œí¼ ì˜¤ë¥¸ìª½ í˜¹ì€ ì™¼ìª½ìœ¼ë¡œ ë°€ì–´ì„œ ë°°ì¹˜
       public void rotationCheck(){
-       // curX,Y¿¡ ´ÙÀ½ È¸Àü µµÇüÀÇ Àı´ëÁÂÇ¥¸¦ ¸ğµÎ ±â·ÏÇØµÎ°í, ¹Ø¿¡ ±¸¹®¿¡¼­ ±× Àı´ëÁÂÇ¥ÀÇ °ªÀÌ º®¿¡ ´ê´ÂÁö ÆÇ´Ü
+       // curX,Yì— ë‹¤ìŒ íšŒì „ ë„í˜•ì˜ ì ˆëŒ€ì¢Œí‘œë¥¼ ëª¨ë‘ ê¸°ë¡í•´ë‘ê³ , ë°‘ì— êµ¬ë¬¸ì—ì„œ ê·¸ ì ˆëŒ€ì¢Œí‘œì˜ ê°’ì´ ë²½ì— ë‹¿ëŠ”ì§€ íŒë‹¨
          int cnt2=0;
           for(int j = 0; j<4 ;j++){
               for(int k = 0; k<4;k++){
@@ -561,18 +589,18 @@ public class game extends JFrame {
               }
           }
           
-       // curX,Y¿¡ ÀúÀåµÈ ÁÂÇ¥¸¦ ÀÌ¿ë
+       // curX,Yì— ì €ì¥ëœ ì¢Œí‘œë¥¼ ì´ìš©
           int chk = 0;
           int blank =0;
           int error = 0;
-           // ¿ŞÂÊ º®
+           // ì™¼ìª½ ë²½
              
                 
                       if(gameboard[curY[0]][curX[0]] == 1 || (random == 6 && gameboard[curY[2]][curX[2]] == 1) || (random == 1 && gameboard[curY[1]][curX[1]] ==1 )){
-                         chk = 1; // ¸¸¾à ´ÙÀ½ È¸ÀüÇÑ µµÇüÀÇ À§Ä¡°¡ º®°ú °ãÄ£´Ù¸é chk=1·Î Ç¥½ÃÇÔ           
+                         chk = 1; // ë§Œì•½ ë‹¤ìŒ íšŒì „í•œ ë„í˜•ì˜ ìœ„ì¹˜ê°€ ë²½ê³¼ ê²¹ì¹œë‹¤ë©´ chk=1ë¡œ í‘œì‹œí•¨           
                          error++;
                          System.out.println("chk1");
-                         if(random == 3){ // ÀÏÀÚ¸·´ëÀÇ °æ¿ì È¸ÀüÇÒ ¿©À¯°¡ ÀÖ´Â °ø¹éÀÌ ¾øÀ¸¸é È¸Àü¸·À½
+                         if(random == 3){ // ì¼ìë§‰ëŒ€ì˜ ê²½ìš° íšŒì „í•  ì—¬ìœ ê°€ ìˆëŠ” ê³µë°±ì´ ì—†ìœ¼ë©´ íšŒì „ë§‰ìŒ
                             for(int i=1;i<5;i++)
                                if(gameboard[curY[0]][curX[0]+i] == 0)
                                   blank++;
@@ -580,7 +608,7 @@ public class game extends JFrame {
                                chk = 4;
                             
                               System.out.println(blank);
-                         }else{ // ±× ¿ÜÀÇ °æ¿ì È¸ÀüÇÒ ¿©À¯°¡ ¾ø´Â °ø¹éÀÌ ¾øÀ¸¸é È¸Àü ¸·À½
+                         }else{ // ê·¸ ì™¸ì˜ ê²½ìš° íšŒì „í•  ì—¬ìœ ê°€ ì—†ëŠ” ê³µë°±ì´ ì—†ìœ¼ë©´ íšŒì „ ë§‰ìŒ
                             for(int i=1; i<4;i++)
                                if(gameboard[curY[0]][curX[0]+i] == 0)
                                   blank++;
@@ -592,12 +620,12 @@ public class game extends JFrame {
                          
                       }
             
-          //¿À¸¥ÂÊ º®
+          //ì˜¤ë¥¸ìª½ ë²½
              
                  
                       else if(gameboard[curY[2]][curX[2]] == 1){
                         error++;
-                       chk = 2; // ¸¸¾à ´ÙÀ½ È¸ÀüÇÑ µµÇüÀÇ À§Ä¡°¡ º®°ú °ãÄ£´Ù¸é chk=2·Î Ç¥½ÃÇÔ  
+                       chk = 2; // ë§Œì•½ ë‹¤ìŒ íšŒì „í•œ ë„í˜•ì˜ ìœ„ì¹˜ê°€ ë²½ê³¼ ê²¹ì¹œë‹¤ë©´ chk=2ë¡œ í‘œì‹œí•¨  
                        System.out.println("chk2");
                        
                        for(int i=1; i<5;i++)
@@ -612,7 +640,7 @@ public class game extends JFrame {
                     }
                       else if(gameboard[curY[3]][curX[3]] == 1){
                        error++;
-                       chk = 3; // ¸¸¾à ´ÙÀ½ È¸ÀüÇÑ µµÇüÀÇ À§Ä¡°¡ º®°ú °ãÄ£´Ù¸é chk=3·Î Ç¥½ÃÇÔ    
+                       chk = 3; // ë§Œì•½ ë‹¤ìŒ íšŒì „í•œ ë„í˜•ì˜ ìœ„ì¹˜ê°€ ë²½ê³¼ ê²¹ì¹œë‹¤ë©´ chk=3ë¡œ í‘œì‹œí•¨    
                        System.out.println("chk3");
                        for(int i=0; i<5;i++)
                           if(gameboard[curY[3]][curX[3]-i] == 0)
@@ -626,7 +654,7 @@ public class game extends JFrame {
              
           
           
-          if(chk == 1){ // chk = 1(´ÙÀ½ È¸ÀüÇÑ µµÇüÀÇ À§Ä¡°¡ º®°ú Áßº¹µÇ¸é)¸é wid(°¡·Î)·Î 30ÀÌµ¿
+          if(chk == 1){ // chk = 1(ë‹¤ìŒ íšŒì „í•œ ë„í˜•ì˜ ìœ„ì¹˜ê°€ ë²½ê³¼ ì¤‘ë³µë˜ë©´)ë©´ wid(ê°€ë¡œ)ë¡œ 30ì´ë™
              wid += blocksize;
              rotation++;
              rotation = rotation%4;
@@ -648,13 +676,13 @@ public class game extends JFrame {
           
       }
       
-      public void makeBorder(Graphics g){  //±âµÕµé À§Ä¡
+      public void makeBorder(Graphics g){  //ê¸°ë‘¥ë“¤ ìœ„ì¹˜
          g.setColor(Color.GRAY);
          
-         g.draw3DRect(478, 170, 5, 375,true); // ±âµÕ
-         g.draw3DRect(715, 170, 5, 375, true); // ±âµÕ
-         g.draw3DRect(465, 545, 270, 5,true); // ¹Ù´Ú
-         g.draw3DRect(465, 165, 270, 5, true); // ÃµÀå
+         g.draw3DRect(478, 170, 5, 375,true); // ê¸°ë‘¥
+         g.draw3DRect(715, 170, 5, 375, true); // ê¸°ë‘¥
+         g.draw3DRect(465, 545, 270, 5,true); // ë°”ë‹¥
+         g.draw3DRect(465, 165, 270, 5, true); // ì²œì¥
       }
       
       void down(){
@@ -673,14 +701,14 @@ public class game extends JFrame {
          }
       }
       void moveLeft(){
-         int sel = collision_LEFT();// selÀÌ 1ÀÌ¸é Ãæµ¹, 0ÀÌ¸é Ãæµ¹X
+         int sel = collision_LEFT();// selì´ 1ì´ë©´ ì¶©ëŒ, 0ì´ë©´ ì¶©ëŒX
          if(sel == 0 && limit == false){
             wid -= blocksize;
                TP.repaint();
          }
       }
       void moveRight(){
-         int sel = collision_RIGHT();// selÀÌ 1ÀÌ¸é Ãæµ¹, 0ÀÌ¸é Ãæµ¹X
+         int sel = collision_RIGHT();// selì´ 1ì´ë©´ ì¶©ëŒ, 0ì´ë©´ ì¶©ëŒX
          if(sel == 0 && limit == false){ 
             wid += blocksize;
             TP.repaint();
@@ -694,12 +722,12 @@ public class game extends JFrame {
          while(true){
             try{
             	sleep(500/speed_Value);
-            	while(true) //pause ±â´É
+            	while(true) //pause ê¸°ëŠ¥
         		{
             		btn4.addActionListener(new ActionListener(){
             	          public void actionPerformed(ActionEvent e){
             	        	  
-            	        	  isPause = false; //Àç°³
+            	        	  isPause = false; //ì¬ê°œ
             	          }
             	       });
             		if(isPause!=true)
@@ -707,7 +735,7 @@ public class game extends JFrame {
             			break;
                 	}
         		}
-               if(limit == false) // limitÀÌ falseÀÏ °æ¿ì¿¡¸¸ ÀÛµ¿. true°¡ µÇ¸é Å×Æ®¸®½º ÀÛµ¿ÁßÁö
+               if(limit == false) // limitì´ falseì¼ ê²½ìš°ì—ë§Œ ì‘ë™. trueê°€ ë˜ë©´ í…ŒíŠ¸ë¦¬ìŠ¤ ì‘ë™ì¤‘ì§€
                   TP.down();
             }catch(InterruptedException e){
                return;
@@ -717,6 +745,48 @@ public class game extends JFrame {
    }
    
    public static void main(String[] args){
-      new game();
+      new IndepClassListener();
    }
+}
+
+class IndepClassListener extends JFrame {
+	public IndepClassListener() {
+		setTitle("í…ŒíŠ¸ë¦¬ìŠ¤");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Container c = getContentPane();
+		c.setLayout(new FlowLayout(1,1400,40));
+		//ì²˜ìŒ ì°½ì´ ëœ¨ëŠ” ìœ„ì¹˜
+		Dimension frameSize = this.getSize();
+	    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		setLocation((screenSize.width - frameSize.width)/4, (screenSize.height - frameSize.height)/10);
+		
+		c.setBackground(Color.WHITE);
+		ImageIcon i1 = new ImageIcon("images/TETRIS.png");
+		ImageIcon i2 = new ImageIcon("images/Game Start.png");
+		ImageIcon i3 = new ImageIcon("images/Exit.png");
+		
+		JLabel btn0 = new JLabel(i1);
+		JButton btn1 = new JButton(" ",i2);
+		JButton btn2 = new JButton(i3);
+		btn1.addActionListener(new MyActionListenerr());
+		btn2.addActionListener(new MyActionListenerr());// Action ë¦¬ìŠ¤ë„ˆ ë‹¬ê¸°
+		
+		c.add(btn0);
+		c.add(btn1);
+		c.add(btn2);
+		
+		setSize(770, 700);
+		setVisible(true); 
+		
+		}
+}
+
+class MyActionListenerr implements ActionListener { 
+	public void actionPerformed(ActionEvent e) {
+		JButton b = (JButton)e.getSource();
+		if(b.getText().equals(" "))
+			new game();
+		else
+			System.exit(0);
+	}
 }
