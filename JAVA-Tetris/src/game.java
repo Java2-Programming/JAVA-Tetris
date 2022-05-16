@@ -265,7 +265,19 @@ public class game extends JFrame {
    JLabel lbl2 = new JLabel(); //점수 숫자
    JLabel lbl3 = new JLabel(); //속도
    JLabel lbl4 = new JLabel(); //속도숫자
-      
+   
+   //성욱
+   ImageIcon i1 = new ImageIcon("images/Restart.png");
+   JButton btnn = new JButton(i1);
+   JLabel sc = new JLabel("Score");
+   ImageIcon low = new ImageIcon("images/low.png");
+   ImageIcon middle = new ImageIcon("images/middle.png");
+   ImageIcon high = new ImageIcon("images/high.png");
+   JLabel low1 = new JLabel(low);
+   JLabel middle1 = new JLabel(middle);
+   JLabel high1 = new JLabel(high);
+   //성욱
+   
    game(){
       setTitle("테트리스");
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -311,8 +323,14 @@ public class game extends JFrame {
          });
       
       //버튼 리스너
-      btn.addActionListener(new ActionListener(){
+      btnn.addActionListener(new ActionListener(){
          public void actionPerformed(ActionEvent e){
+        	 //성욱
+        	JD.remove(high1);
+            JD.remove(middle1);
+            JD.remove(low1); 
+            //성욱
+        	 
             limit = false;
             for(int y=0; y<YVALUE;y++)
                for(int x=STARTX; x<XVALUE; x++)
@@ -447,14 +465,24 @@ public class game extends JFrame {
          for(int x=STARTX;x<XVALUE;x++)
              if(gameboard[2][x]==1){
                 limit = true;
-                
+                //성욱
+                JD.setSize(300, 400);
                
+                JD.add(sc);
                 //lbl.setLocation(50,50);
                 JD.add(lbl);
-                JD.add(btn);
+                JD.add(btnn);
                
                 //btn.setLocation(50,30);
                 JD.setVisible(true);
+                
+                //성욱
+                if(score == 0)
+                	JD.add(low1);
+                else if(score >0 && score < 10)
+                	JD.add(middle1);
+                else
+                	JD.add(high1);
              }
       }
       
@@ -717,6 +745,48 @@ public class game extends JFrame {
    }
    
    public static void main(String[] args){
-      new game();
+      new IndepClassListener();
    }
+}
+
+class IndepClassListener extends JFrame {
+	public IndepClassListener() {
+		setTitle("테트리스");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Container c = getContentPane();
+		c.setLayout(new FlowLayout(1,1400,40));
+		//처음 창이 뜨는 위치
+		Dimension frameSize = this.getSize();
+	    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		setLocation((screenSize.width - frameSize.width)/4, (screenSize.height - frameSize.height)/10);
+		
+		c.setBackground(Color.WHITE);
+		ImageIcon i1 = new ImageIcon("images/TETRIS.png");
+		ImageIcon i2 = new ImageIcon("images/Game Start.png");
+		ImageIcon i3 = new ImageIcon("images/Exit.png");
+		
+		JLabel btn0 = new JLabel(i1);
+		JButton btn1 = new JButton(" ",i2);
+		JButton btn2 = new JButton(i3);
+		btn1.addActionListener(new MyActionListenerr());
+		btn2.addActionListener(new MyActionListenerr());// Action 리스너 달기
+		
+		c.add(btn0);
+		c.add(btn1);
+		c.add(btn2);
+		
+		setSize(770, 700);
+		setVisible(true); 
+		
+		}
+}
+
+class MyActionListenerr implements ActionListener { 
+	public void actionPerformed(ActionEvent e) {
+		JButton b = (JButton)e.getSource();
+		if(b.getText().equals(" "))
+			new game();
+		else
+			System.exit(0);
+	}
 }
